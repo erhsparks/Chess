@@ -9,6 +9,10 @@ class NullPiece
     #placeholder
   end
 
+  def to_s
+    @symbol.to_s.white
+  end
+
   def valid_moves
     [[0,0],[2,2]]
   end
@@ -55,6 +59,10 @@ class Board
   end
 
   def checkmate?
+  end
+
+  def in_bounds?(pos)
+    pos.all? { |idx| (0...@rows.size).include?(idx) }
   end
 
   protected

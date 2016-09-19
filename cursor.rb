@@ -77,10 +77,10 @@ class Cursor
 
   def handle_key(key)
     case key
-    when :return || :space
+    when :return, :space
       @cursor_pos
-    when :left || :right || :up || :down
-      update_pos(MOVES[:key])
+    when :left, :right, :up, :down
+      update_pos(MOVES[key])
       nil
     when :ctrl_c
       Process.exit(0)
@@ -90,11 +90,11 @@ class Cursor
   end
 
   def update_pos(diff)
-    test_pos = @cursor_pos.map { |idx| idx + diff.shift }
-    unless @board.in_bounds?(test_pos)
+    test_pos = @cursor_pos.map.with_index { |idx, i| idx + diff[i] }
+    if @board.in_bounds?(test_pos)
+      @cursor_pos = test_pos
+    else
       get_input
     end
-
-    @cursor_pos = test_pos
   end
 end
