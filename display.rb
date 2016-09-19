@@ -9,27 +9,36 @@ class Display
   end
 
   def render
-# require 'byebug'
-# debugger
-    @board.rows.each_with_index do |row, i|
-      row.each_with_index do |piece, j|
-        if @cursor.cursor_pos == [i, j]
-          print "| #{piece.to_s} |".on_blue
-        else
-          print "| #{piece.to_s} |"
-        end
+    system("clear")
+    @board.rows.each_with_index do |row, x|
+      row.each_with_index do |piece, y|
+        color = display_color(x, y)
+        print "#{piece.to_s} ".send(color)
       end
     print "\n"
     end
     puts
   end
 
-  # def test_cursor
-  #   while true
-  #     render
-  #     @cursor.get_input
-  #   end
-  # end
+  def test_cursor
+    while true
+      render
+      @cursor.get_input
+    end
+  end
+
+  def display_color(x, y)
+    color = "on_"
+    color << "light_" if @cursor.cursor_pos == [x, y]
+
+    if x.even?
+      color << (y.even? ? "blue" :  "red")
+    else
+      color << (y.even? ? "red" : "blue")
+    end
+
+    color
+  end
 end
 
 

@@ -5,7 +5,7 @@ class NullPiece
   attr_reader :symbol
 
   def initialize
-    @symbol = "NT"
+    @symbol = :♘
     #placeholder
   end
 
