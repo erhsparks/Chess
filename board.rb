@@ -15,6 +15,10 @@ class Board
 
   def initialize
     @captured = []
+    @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
+  end
+
+  def set_grid
     make_starting_grid
   end
 
@@ -31,6 +35,18 @@ class Board
   end
 
   def dup
+    test_board = Board.new
+
+    @rows.each_with_index do |row, x|
+      row.each_with_index do |piece, y|
+        next if piece.is_a?(NullPiece)
+        
+        color = piece.color
+        test_board[[x,y]] = piece.class.new(color, test_board)
+      end
+    end
+
+    test_board
   end
 
   def move_piece(color, from_pos, to_pos)
@@ -83,7 +99,6 @@ class Board
 
   protected
   def make_starting_grid
-    @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
     @rows[0] = non_pawn_line(:black)
     @rows[1] = Array.new(8) { Pawn.new(:black, self) }
     @rows[6] = Array.new(8) { Pawn.new(:white, self) }
