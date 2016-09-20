@@ -1,7 +1,13 @@
 require 'colorize'
-require_relative './piece/sliding_piece'
-require_relative './piece/stepping_piece'
+require_relative './piece/bishop'
+require_relative './piece/queen'
+require_relative './piece/rook'
+
+require_relative './piece/king'
+require_relative './piece/knight'
+
 require_relative './piece/pawn'
+
 require_relative './piece/nullpiece'
 
 class Board
@@ -69,6 +75,14 @@ class Board
     @rows[1] = Array.new(8) { Pawn.new(:black, self) }
     @rows[6] = Array.new(8) { Pawn.new(:white, self) }
     @rows[7] = non_pawn_line(:white)
+
+    piece_soul_search
+  end
+
+  def piece_soul_search
+    @rows.flatten.each do |piece|
+      piece.find_self unless piece == NullPiece.instance
+    end
   end
 
   def non_pawn_line(color)

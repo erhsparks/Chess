@@ -1,12 +1,15 @@
 require 'colorize'
 
 class Piece
-  attr_reader :color, :symbol
+  attr_reader :color, :symbol, :my_position, :board
 
     def initialize(color, board)
       @color = color
       @board = board
-      @my_positon = board.find(self)
+    end
+
+    def find_self
+      @my_position = board.find(self)
     end
 
     def to_s

@@ -1,6 +1,6 @@
 require_relative 'piece'
 
-module SteppingPiece
+module Steppable
   def moves
   end
 
