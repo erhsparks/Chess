@@ -35,7 +35,7 @@ class Board
     end
 
     piece = self[from_pos]
-    unless piece.valid_moves(from_pos, to_pos).include?(to_pos)
+    unless piece.moves.include?(to_pos)
       raise MoveError.new("ERROR! #{piece.symbol} to #{to_pos} is not a legal move!")
     end
 
@@ -49,6 +49,16 @@ class Board
 
   def in_bounds?(pos)
     pos.all? { |idx| (0...@rows.size).include?(idx) }
+  end
+
+  def find(target_piece)
+    @rows.each_with_index do |row, x|
+      row.each_with_index do |piece, y|
+        return [x,y] if piece == target_piece
+      end
+    end
+
+    nil
   end
 
   protected

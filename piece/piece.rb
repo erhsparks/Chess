@@ -6,6 +6,7 @@ class Piece
     def initialize(color, board)
       @color = color
       @board = board
+      @my_positon = board.find(self)
     end
 
     def to_s
