@@ -35,7 +35,7 @@ class Board
     end
 
     piece = self[from_pos]
-    unless piece.valid_moves.include?(to_pos)
+    unless piece.valid_moves(from_pos, to_pos).include?(to_pos)
       raise MoveError.new("ERROR! #{piece.symbol} to #{to_pos} is not a legal move!")
     end
 
