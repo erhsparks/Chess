@@ -10,13 +10,13 @@ module Slideable
   def valid_moves
     result = []
     self.move_diffs.each do |diff|
-      result += grow_unblocked_moves_in_dir(@my_position, diff)
+      result += grow_unblocked_moves_in_diff(@my_position, diff)
     end
 
     result
   end
 
-  def grow_unblocked_moves_in_dir(pos, diff)
+  def grow_unblocked_moves_in_diff(pos, diff)
     x, y = pos
     dx, dy = diff
     test_pos = [x + dx, y + dy]

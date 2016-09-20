@@ -53,7 +53,18 @@ class Board
     nil
   end
 
-  def checkmate?
+  def in_check?(color)
+    king_pos = find_king(color)
+    opponent_color = (color == :white ? :black : :white)
+    @rows.any? do |row|
+      row.any? do |piece|
+        next if piece.is_a?(NullPiece)
+        piece.moves.include?(king_pos) if piece.color == opponent_color
+      end
+    end
+  end
+
+  def checkmate?(color)
   end
 
   def in_bounds?(pos)
@@ -88,6 +99,12 @@ class Board
   end
 
   def find_king(color)
+    @rows.each_with_index do |row, x|
+      row.each_with_index do |piece, y|
+        next if piece.is_a?(NullPiece)
+        return [x, y] if piece.color == color && piece.class == King
+      end
+    end
   end
 end
 
