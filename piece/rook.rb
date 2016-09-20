@@ -9,7 +9,7 @@ class Rook < Piece
   end
 
   protected
-  def move_dirs
-    [[-1,0], [1,0], [0,-1], [0,1]] 
+  def move_diffs
+    [[-1,0], [1,0], [0,-1], [0,1]]
   end
 end

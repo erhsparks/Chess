@@ -49,6 +49,8 @@ class Board
     @captured << self[to_pos] if self[to_pos].is_a?(Piece)
     self[to_pos] = piece
     self[from_pos] = NullPiece.instance
+
+    nil
   end
 
   def checkmate?

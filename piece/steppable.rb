@@ -11,8 +11,8 @@ module Steppable
     result = []
     x, y = @my_position
 
-    self.move_diffs.each do |dir|
-      dx, dy = dir
+    self.move_diffs.each do |diff|
+      dx, dy = diff
       test_pos = [x + dx, y + dy]
 
       next unless board.in_bounds?(test_pos)

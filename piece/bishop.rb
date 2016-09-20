@@ -9,7 +9,7 @@ class Bishop < Piece
   end
 
   protected
-  def move_dirs
+  def move_diffs
     [[-1,-1], [-1,1], [1,-1], [1,1]]
   end
 end

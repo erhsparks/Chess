@@ -11,7 +11,3 @@ class NullPiece
     @symbol
   end
 end
-
-# n = NullPiece.new
-# puts NullPiece.new.to_s
-puts NullPiece.instance.to_s
