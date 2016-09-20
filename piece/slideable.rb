@@ -2,6 +2,7 @@ require_relative 'piece'
 
 module Slideable
   def moves
+    find_self
     valid_moves
   end
 
@@ -20,12 +21,11 @@ module Slideable
     dx, dy = dir
     test_pos = [x + dx, y + dy]
 
-    return [] if board.in_bounds?(test_pos)
-    if board[test_pos] != NullPiece.instance
+    return [] unless board.in_bounds?(test_pos)
+    if board[test_pos].is_a?(Piece)
       board[test_pos].color == @color ? [] : [test_pos]
     else
-      [test_pos].concat([grow_unblocked_moves_in_dir(test_pos, dir)])
+      [test_pos].concat(grow_unblocked_moves_in_dir(test_pos, dir))
     end
   end
-
 end

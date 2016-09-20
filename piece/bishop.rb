@@ -8,11 +8,8 @@ class Bishop < Piece
     super
   end
 
-  # protected
+  protected
   def move_dirs
     [[-1,-1], [-1,1], [1,-1], [1,1]]
   end
 end
-
-
-# d = Display.new ; bishop = d.board[[0,2]]

@@ -11,9 +11,10 @@ require_relative './piece/pawn'
 require_relative './piece/nullpiece'
 
 class Board
-  attr_reader :rows
+  attr_reader :rows, :captured
 
   def initialize
+    @captured = []
     make_starting_grid
   end
 
@@ -36,7 +37,7 @@ class Board
   end
 
   def move_piece!(from_pos, to_pos)
-    if self[from_pos] == NullPiece.instance
+    if self[from_pos].is_a?(NullPiece)
       raise MoveError.new("ERROR! No piece to move at #{from_pos}!")
     end
 
@@ -45,7 +46,7 @@ class Board
       raise MoveError.new("ERROR! #{piece.symbol} to #{to_pos} is not a legal move!")
     end
 
-    #if capturing, need logic here
+    @captured << self[to_pos] if self[to_pos].is_a?(Piece)
     self[to_pos] = piece
     self[from_pos] = NullPiece.instance
   end
@@ -68,21 +69,12 @@ class Board
   end
 
   protected
-
   def make_starting_grid
     @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
     @rows[0] = non_pawn_line(:black)
     @rows[1] = Array.new(8) { Pawn.new(:black, self) }
     @rows[6] = Array.new(8) { Pawn.new(:white, self) }
     @rows[7] = non_pawn_line(:white)
-
-    piece_soul_search
-  end
-
-  def piece_soul_search
-    @rows.flatten.each do |piece|
-      piece.find_self unless piece == NullPiece.instance
-    end
   end
 
   def non_pawn_line(color)

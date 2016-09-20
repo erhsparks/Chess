@@ -19,3 +19,5 @@ class Piece
       sym.send(color)
     end
 end
+
+# d = Display.new ; bishop = d.board[[0,2]]
