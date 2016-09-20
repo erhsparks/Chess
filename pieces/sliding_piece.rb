@@ -5,22 +5,25 @@ module SlidingPiece
 end
 
 class Bishop < Piece
-  def initialize
+  def initialize(color, board)
     @symbol = :♝
+    super
   end
 
 end
 
 class Rook < Piece
-  def initialize
+  def initialize(color, board)
     @symbol = :♜
+    super
   end
 
 end
 
 class Queen < Piece
-  def initialize
+  def initialize(color, board)
     @symbol = :♛
+    super
   end
 
 end

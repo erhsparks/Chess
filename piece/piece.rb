@@ -1,18 +1,17 @@
-require_relative '../board'
-require_relative 'nullpiece'
-require_relative 'sliding_piece'
-require_relative 'stepping_piece'
+require 'colorize'
 
 class Piece
   attr_reader :color, :symbol
 
-    def initialize(color, symbol, board)
+    def initialize(color, board)
       @color = color
-      @symbol = symbol
       @board = board
     end
 
     def to_s
-      @symbol.send(@color)
+      sym = @symbol.to_s
+      color = @color.to_s
+
+      sym.send(color)
     end
 end

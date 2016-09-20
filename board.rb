@@ -1,5 +1,8 @@
 require 'colorize'
-require_relative './piece/piece'
+require_relative './piece/sliding_piece'
+require_relative './piece/stepping_piece'
+require_relative './piece/pawn'
+require_relative './piece/nullpiece'
 
 class Board
   attr_reader :rows
@@ -52,6 +55,18 @@ class Board
 
   def make_starting_grid
     @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
+    @rows[0] = non_pawn_line(:black)
+    @rows[1] = Array.new(8) { Pawn.new(:black, self) }
+    @rows[6] = Array.new(8) { Pawn.new(:white, self) }
+    @rows[7] = non_pawn_line(:white)
+  end
+
+  def non_pawn_line(color)
+    line = [Rook.new(color, self)]
+    line << Knight.new(color, self) << Bishop.new(color, self) <<
+        Queen.new(color, self) << King.new(color, self) <<
+        Bishop.new(color, self) << Knight.new(color, self) <<
+        Rook.new(color, self)
   end
 
   def find_king(color)

@@ -5,15 +5,17 @@ module SteppingPiece
 end
 
 class Knight < Piece
-  def initialize
+  def initialize(color, board)
     @symbol = :♞
+    super
   end
 
 end
 
 class King < Piece
-  def initialize
+  def initialize(color, board)
     @symbol = :♚
+    super
   end
 
 end
