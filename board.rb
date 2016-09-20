@@ -1,22 +1,5 @@
 require 'colorize'
-
-class NullPiece
-
-  attr_reader :symbol
-
-  def initialize
-    @symbol = :♘
-    #placeholder
-  end
-
-  def to_s
-    @symbol.to_s.white
-  end
-
-  def valid_moves
-    [[0,0],[2,2]]
-  end
-end
+require_relative './piece/piece'
 
 class Board
   attr_reader :rows
@@ -44,7 +27,7 @@ class Board
   end
 
   def move_piece!(from_pos, to_pos)
-    if self[from_pos] == NullPiece.new
+    if self[from_pos] == NullPiece.instance
       raise MoveError.new("ERROR! No piece to move at #{from_pos}!")
     end
 
@@ -55,7 +38,7 @@ class Board
 
     #if capturing, need logic here
     self[to_pos] = piece
-    self[from_pos] = NullPiece.new
+    self[from_pos] = NullPiece.instance
   end
 
   def checkmate?
@@ -68,7 +51,7 @@ class Board
   protected
 
   def make_starting_grid
-    @rows = Array.new(8) { Array.new(8) { NullPiece.new } }
+    @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
   end
 
   def find_king(color)
