@@ -13,9 +13,11 @@ require_relative './piece/nullpiece'
 class Board
   attr_reader :rows, :captured
 
-  def initialize
+  def initialize(rows = nil)
     @captured = []
-    @rows = Array.new(8) { Array.new(8) { NullPiece.instance } }
+
+    @rows = rows
+    @rows ||= Array.new(8) { Array.new(8) { NullPiece.instance } }
   end
 
   def set_grid
@@ -49,28 +51,13 @@ class Board
     test_board
   end
 
-  def move_piece(color, from_pos, to_pos)
-  end
-
   def move_piece!(from_pos, to_pos)
-    if self[from_pos].is_a?(NullPiece)
-      raise MoveError.new("ERROR! No piece to move at #{from_pos}!")
-    end
-
     piece = self[from_pos]
-    unless piece.moves.include?(to_pos)
-      raise MoveError.new("ERROR! #{piece.symbol} to #{to_pos} is not a legal move!")
-    end
-
-    if move_to_check?(from_pos, to_pos)
-      raise MoveError.new("ERROR! Cannot move into check!")
-    end
 
     @captured << self[to_pos] if self[to_pos].is_a?(Piece)
+
     self[to_pos] = piece
     self[from_pos] = NullPiece.instance
-
-    nil
   end
 
   def in_check?(color)
@@ -94,7 +81,7 @@ class Board
         end
       end
     end
-    
+
     true
   end
 
@@ -121,12 +108,15 @@ class Board
     nil
   end
 
-  protected
-  def make_starting_grid
-    @rows[0] = non_pawn_line(:black)
-    @rows[1] = Array.new(8) { Pawn.new(:black, self) }
-    @rows[6] = Array.new(8) { Pawn.new(:white, self) }
-    @rows[7] = non_pawn_line(:white)
+  def self.chessboard
+    board = Board.new
+
+    board.rows[0] = board.non_pawn_line(:black)
+    board.rows[1] = Array.new(8) { Pawn.new(:black, board) }
+    board.rows[6] = Array.new(8) { Pawn.new(:white, board) }
+    board.rows[7] = board.non_pawn_line(:white)
+
+    board
   end
 
   def non_pawn_line(color)
@@ -153,5 +143,4 @@ class MoveError < StandardError
   def initialize(message)
     @message = message.red
   end
-
 end

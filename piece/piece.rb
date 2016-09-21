@@ -9,7 +9,7 @@ class Piece
   end
 
   def find_self
-    @position = board.find(self)
+    @position = @board.find(self)
   end
 
   def to_s

@@ -2,9 +2,9 @@ require_relative 'board'
 require_relative 'cursor'
 
 class Display
-  attr_reader :board
-  
-  def initialize(board = Board.new)
+  attr_reader :board, :cursor
+
+  def initialize(board)
     @cursor = Cursor.new([0,0], board)
     @board = board
   end
@@ -21,13 +21,6 @@ class Display
     puts
   end
 
-  def test_cursor
-    while true
-      render
-      @cursor.get_input
-    end
-  end
-
   def display_color(x, y)
     color = "on_"
     color << "light_" if @cursor.cursor_pos == [x, y]
@@ -40,10 +33,4 @@ class Display
 
     color
   end
-end
-
-
-if __FILE__ == $PROGRAM_NAME
-  d = Display.new
-  d.test_cursor
 end
