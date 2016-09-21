@@ -10,7 +10,7 @@ module Slideable
   def valid_moves
     result = []
     self.move_diffs.each do |diff|
-      result += grow_unblocked_moves_in_diff(@my_position, diff)
+      result += grow_unblocked_moves_in_diff(@position, diff)
     end
 
     result

@@ -9,7 +9,7 @@ module Steppable
   private
   def valid_moves
     result = []
-    x, y = @my_position
+    x, y = @position
 
     self.move_diffs.each do |diff|
       dx, dy = diff

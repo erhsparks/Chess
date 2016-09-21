@@ -40,7 +40,7 @@ class Board
     @rows.each_with_index do |row, x|
       row.each_with_index do |piece, y|
         next if piece.is_a?(NullPiece)
-        
+
         color = piece.color
         test_board[[x,y]] = piece.class.new(color, test_board)
       end
@@ -62,6 +62,10 @@ class Board
       raise MoveError.new("ERROR! #{piece.symbol} to #{to_pos} is not a legal move!")
     end
 
+    if move_to_check?(from_pos, to_pos)
+      raise MoveError.new("ERROR! Cannot move into check!")
+    end
+
     @captured << self[to_pos] if self[to_pos].is_a?(Piece)
     self[to_pos] = piece
     self[from_pos] = NullPiece.instance
@@ -81,6 +85,26 @@ class Board
   end
 
   def checkmate?(color)
+    @rows.each do |row|
+      row.each do |piece|
+        next if piece.is_a?(NullPiece) || piece.color != color
+
+        piece.moves.each do |move|
+          return false unless move_to_check?(piece.position, move)
+        end
+      end
+    end
+    
+    true
+  end
+
+  def move_to_check?(from_pos, to_pos)
+    test_board = self.dup
+    test_piece = test_board[from_pos]
+    test_board[to_pos] = test_piece
+    test_board[from_pos] = NullPiece.instance
+
+    in_check?(test_piece.color)
   end
 
   def in_bounds?(pos)

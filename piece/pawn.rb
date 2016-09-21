@@ -49,11 +49,11 @@ class Pawn < Piece
   end
 
   def at_start_row?
-    @color == :white ? (@my_position[0] == 6) : (@my_position[0] == 1)
+    @color == :white ? (@position[0] == 6) : (@position[0] == 1)
   end
 
   def get_test_pos(diff)
-    x, y = @my_position
+    x, y = @position
     dx, dy = diff
 
     [x + dx, y + dy]
