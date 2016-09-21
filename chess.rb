@@ -19,6 +19,7 @@ class Chess
 
   def play
     play_turn until game_over?
+    @display.render
 
     announce_result
   end
